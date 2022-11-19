@@ -1,4 +1,4 @@
-package com.kbe.priceService;
+package com.kbe2223.priceservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

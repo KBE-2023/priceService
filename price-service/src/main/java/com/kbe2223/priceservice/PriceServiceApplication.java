@@ -1,4 +1,4 @@
-package com.kbe.priceService;
+package com.kbe2223.priceservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
