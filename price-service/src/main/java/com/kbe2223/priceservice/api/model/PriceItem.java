@@ -8,6 +8,7 @@ public class PriceItem {
         this.price = price;
     }
 
+
     private String name;
     private String desc;
     private double price;
