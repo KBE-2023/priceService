@@ -1,4 +1,4 @@
-package com.kbe2223.priceservice.api.entity;
+package com.kbe2223.priceservice.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,24 +11,36 @@ public class Price {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private double price;
-    private String currency;
 
+    private Long productId;
+
+    private double price;
+
+    // Default constructor
     public Price() {
     }
 
-    public Price(Long id, double price, String currency) {
-        this.id = id;
+    // Parameterized constructor
+    public Price(Long productId, double price) {
+        this.productId = productId;
         this.price = price;
-        this.currency = "Euro";
     }
 
+    // Getters and setters
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public double getPrice() {
@@ -39,11 +51,4 @@ public class Price {
         this.price = price;
     }
 
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
 }
