@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * Service class for managing pricing information.
+ * The PriceService class provides the business logic for interacting with the PriceRepository.
  */
 @Service
 public class PriceService {
@@ -14,21 +14,48 @@ public class PriceService {
     private PriceRepository priceRepository;
 
     /**
-     * Retrieves the price information for a given product ID.
+     * Retrieves a price record by ID.
      *
-     * @param productId the ID of the product for which to retrieve price information
-     * @return the Price object containing the price information, or null if no matching price is found
+     * @param id The ID of the price record to retrieve.
+     * @return The retrieved Price object, or null if no record with the specified ID was found.
      */
-    public Price getPriceByProductId(Long productId) {
-        return priceRepository.findByProductId(productId);
+    public Price getPriceById(Long id) {
+        return priceRepository.findById(id).orElse(null);
     }
 
     /**
-     * Adds or updates the price information for a given product.
+     * Creates a new price record.
      *
-     * @param price the Price object containing the pricing information to add or update
+     * @param price The Price object representing the new price record.
+     * @return The created Price object.
      */
-    public void addOrUpdatePrice(Price price) {
-        priceRepository.save(price);
+    public Price createPrice(Price price) {
+        return priceRepository.save(price);
     }
+
+    /**
+     * Updates an existing price record.
+     *
+     * @param id The ID of the price record to update.
+     * @param updatedPrice The updated Price object representing the new price information.
+     * @return The updated Price object, or null if no record with the specified ID was found.
+     */
+    public Price updatePrice(Long id, Price updatedPrice) {
+        Price existingPrice = priceRepository.findById(id).orElse(null);
+        if (existingPrice != null) {
+            existingPrice.setPrice(updatedPrice.getPrice());
+            return priceRepository.save(existingPrice);
+        }
+        return null;
+    }
+
+    /**
+     * Deletes an existing price record.
+     *
+     * @param id The ID of the price record to delete.
+     */
+    public void deletePrice(Long id) {
+        priceRepository.deleteById(id);
+    }
+
 }

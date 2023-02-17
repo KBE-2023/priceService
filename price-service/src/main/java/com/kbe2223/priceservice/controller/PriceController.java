@@ -8,40 +8,68 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * REST controller for managing pricing information.
+ * The PriceController class defines the REST endpoints for the Price service.
  */
 @RestController
-@RequestMapping("/prices")
+@RequestMapping("/price")
 public class PriceController {
 
     @Autowired
     private PriceService priceService;
 
     /**
-     * Retrieves the pricing information for a given product ID.
+     * Retrieves a price record by ID.
      *
-     * @param productId the ID of the product for which to retrieve pricing information
-     * @return the pricing information as a JSON object, or a 404 error if no matching price is found
+     * @param id The ID of the price record to retrieve.
+     * @return A ResponseEntity containing the retrieved Price and an HTTP status code.
      */
-    @GetMapping("/{productId}")
-    public ResponseEntity<Price> getPriceByProductId(@PathVariable Long productId) {
-        Price price = priceService.getPriceByProductId(productId);
+    @GetMapping("/{id}")
+    public ResponseEntity<Price> getPriceById(@PathVariable Long id) {
+        Price price = priceService.getPriceById(id);
         if (price != null) {
             return new ResponseEntity<>(price, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     /**
-     * Adds or updates the pricing information for a given product.
+     * Creates a new price record.
      *
-     * @param price the pricing information as a JSON object
-     * @return a 201 CREATED status code if the pricing information was added or updated successfully
+     * @param price The Price object representing the new price record.
+     * @return A ResponseEntity containing the created Price and an HTTP status code.
      */
     @PostMapping
-    public ResponseEntity<Void> addOrUpdatePrice(@RequestBody Price price) {
-        priceService.addOrUpdatePrice(price);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Price> createPrice(@RequestBody Price price) {
+        Price createdPrice = priceService.createPrice(price);
+        return new ResponseEntity<>(createdPrice, HttpStatus.CREATED);
     }
+
+    /**
+     * Updates an existing price record.
+     *
+     * @param id The ID of the price record to update.
+     * @param price The updated Price object representing the new price information.
+     * @return A ResponseEntity containing the updated Price and an HTTP status code.
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<Price> updatePrice(@PathVariable Long id, @RequestBody Price price) {
+        Price updatedPrice = priceService.updatePrice(id, price);
+        if (updatedPrice != null) {
+            return new ResponseEntity<>(updatedPrice, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     * Deletes an existing price record.
+     *
+     * @param id The ID of the price record to delete.
+     * @return A ResponseEntity with an HTTP status code indicating success or failure.
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deletePrice(@PathVariable Long id) {
+        priceService.deletePrice(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }

@@ -12,21 +12,14 @@ public class Price {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long productId;
+    private Double price;
 
-    private double price;
+    public Price() {}
 
-    // Default constructor
-    public Price() {
-    }
-
-    // Parameterized constructor
-    public Price(Long productId, double price) {
-        this.productId = productId;
+    public Price(Double price) {
         this.price = price;
     }
 
-    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -35,19 +28,11 @@ public class Price {
         this.id = id;
     }
 
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
