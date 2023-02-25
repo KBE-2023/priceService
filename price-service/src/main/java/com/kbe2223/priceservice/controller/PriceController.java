@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * The PriceController class defines the REST endpoints for the Price service.
  */
@@ -23,7 +25,7 @@ public class PriceController {
      * @param id The ID of the price record to retrieve.
      * @return A ResponseEntity containing the retrieved Price and an HTTP status code.
      */
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<Price> getPriceById(@PathVariable Long id) {
         Price price = priceService.getPriceById(id);
         if (price != null) {
@@ -31,6 +33,22 @@ public class PriceController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+
+    /**
+     * Returns a list of all prices in the database.
+     *
+     * @return a list of all prices in the database, or NOT_FOUND if the database is empty
+     */
+    @GetMapping("/get/all")
+    public ResponseEntity<List<Price>> getAllPrices() {
+        List<Price> prices = priceService.getAllPrices();
+        if (!prices.isEmpty()) {
+            return new ResponseEntity<>(prices, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
 
     /**
      * Creates a new price record.
