@@ -4,6 +4,8 @@ import com.kbe2223.priceservice.entity.Price;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * The PriceService class provides the business logic for interacting with the PriceRepository.
  */
@@ -22,6 +24,16 @@ public class PriceService {
     public Price getPriceById(Long id) {
         return priceRepository.findById(id).orElse(null);
     }
+
+    /**
+     * Returns a list of all prices in the database.
+     *
+     * @return a list of all prices in the database
+     */
+    public List<Price> getAllPrices() {
+        return priceRepository.findAll();
+    }
+
 
     /**
      * Creates a new price record.
